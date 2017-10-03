@@ -1,0 +1,64 @@
+
+import org.kuali.ole.OLEConstants
+import org.kuali.ole.deliver.bo.OleLoanDocument
+import org.kuali.ole.deliver.bo.OlePatronDocument
+import org.kuali.ole.deliver.util.OleItemRecordForCirc
+import org.kuali.ole.deliver.drools.DroolsConstants
+import org.kuali.ole.deliver.util.DroolsResponse
+import org.kuali.ole.deliver.util.NoticeInfo
+
+rule "OneWeekLoanRenewalNew"
+agenda-group "renewal validation"
+activation-group "renewal validation"
+when
+
+$l: OleLoanDocument(Integer.valueOf(getNumberOfRenewals()) < 10)
+$d : DroolsResponse()
+$n: NoticeInfo()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL","STU","SCHLR","RESAST","SPORS"))
+$i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK"))
+
+then
+ $d.setRuleMatched(true);
+ $l.setCirculationPolicyId("OneWeekLoanRenewalNew");
+ $l.loanPeriod("7-D","7-D");
+ $n.setNoticeType(DroolsConstants.REGULAR_LOANS_NOTICE_CONFIG);
+ end
+
+rule "OneWeekLoanRenewalNew1"
+agenda-group "renewal validation"
+activation-group "renewal validation"
+when
+
+$l: OleLoanDocument(Integer.valueOf(getNumberOfRenewals()) >= 10)
+$n: NoticeInfo()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL","STU","SCHLR","RESAST","SPORS"))
+$i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK"))
+
+then
+ $d.setRuleMatched(true);
+ $l.setCirculationPolicyId("OneWeekLoanRenewalNew1");
+ $d.addErrorMessage("Patron has more than allowed limit of renewals");
+ $d.addErrorMessageCode("ErrorMessageFromRule");
+ $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+ $l.loanPeriod("7-D","7-D");
+ $n.setNoticeType(DroolsConstants.REGULAR_LOANS_NOTICE_CONFIG);
+ end
+
+rule "OneWeekLoanRenewalNewLIB"
+agenda-group "renewal validation"
+activation-group "renewal validation"
+when
+
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$n: NoticeInfo()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+$i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK"))
+
+then
+ $d.setRuleMatched(true);
+ $l.setCirculationPolicyId("OneWeekLoanRenewalNewLIB");
+ $l.loanPeriod("7-D","7-D");
+ end

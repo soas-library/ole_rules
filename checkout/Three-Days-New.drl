@@ -1,0 +1,221 @@
+package org.kuali.ole.deliver.checkout
+
+import org.kuali.ole.OLEConstants
+import org.kuali.ole.deliver.bo.OleLoanDocument
+import org.kuali.ole.deliver.bo.OlePatronDocument
+import org.kuali.ole.deliver.util.OleItemRecordForCirc
+import org.kuali.ole.deliver.drools.DroolsConstants
+import org.kuali.ole.deliver.util.DroolsResponse
+
+rule "CD3CheckOutValidationNew6"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),
+(getLoanedItemsCountByItemType($i.getItemType()) < 4),getTotalLoanedItemsCount() < 20)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew6");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+
+rule "CD3CheckOutValidationNew7"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),
+(getLoanedItemsCountByItemType($i.getItemType()) >= 4),getTotalLoanedItemsCount() < 20)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew7");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$d.addErrorMessage("Patron has more than 4 CD/DVD");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+rule "CD3CheckOutValidationNew8"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() >= 20)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew8");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$d.addErrorMessage("Patron has more than 20 items");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+
+rule "CD3CheckOutValidationNew9"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),
+(getLoanedItemsCountByItemType($i.getItemType()) < 4),getTotalLoanedItemsCount() < 50)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew9");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+
+rule "CD3CheckOutValidationNew10"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),
+(getLoanedItemsCountByItemType($i.getItemType()) >= 4),getTotalLoanedItemsCount() < 50)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew10");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$d.addErrorMessage("Patron has more than 4 CD/DVD");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+rule "CD3CheckOutValidationNew11"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() >= 50)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew11");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$d.addErrorMessage("Patron has more than 50 items");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+
+rule "CD3CheckOutValidationNew18"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),
+(getLoanedItemsCountByItemType($i.getItemType()) < 4),getTotalLoanedItemsCount() < 50)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew18");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+
+rule "CD3CheckOutValidationNew19"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),
+(getLoanedItemsCountByItemType($i.getItemType()) >= 4),getTotalLoanedItemsCount() < 50)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew19");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$d.addErrorMessage("Patron has more than 4 CD/DVD");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+rule "CD3CheckOutValidationNew20"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),getTotalLoanedItemsCount() >= 50)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew20");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$d.addErrorMessage("Patron has more than 50 items");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+rule "CD3CheckOutValidationNew21"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),
+(getLoanedItemsCountByItemType($i.getItemType()) < 4),getTotalLoanedItemsCount() < 100)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew21");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+
+rule "CD3CheckOutValidationNew22"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),
+(getLoanedItemsCountByItemType($i.getItemType()) >= 4),getTotalLoanedItemsCount() < 100)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew22");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$d.addErrorMessage("Patron has more than 4 CD/DVD");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+rule "CD3CheckOutValidationNew23"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() >= 100)
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNew23");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$d.addErrorMessage("Patron has more than 100 items");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+
+rule "CD3CheckOutValidationNewLIB"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+
+then
+$l.setCirculationPolicyId("CD3CheckOutValidationNewLIB");
+$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+ end
+

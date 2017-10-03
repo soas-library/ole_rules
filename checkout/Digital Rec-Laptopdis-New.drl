@@ -1,0 +1,264 @@
+package org.kuali.ole.deliver.checkout
+
+import org.kuali.ole.deliver.bo.OlePatronDocument
+import org.kuali.ole.deliver.util.OleItemRecordForCirc
+import org.kuali.ole.deliver.util.ErrorMessage
+import org.kuali.ole.OLEConstants
+import org.kuali.ole.deliver.bo.OleLoanDocument
+import org.kuali.ole.deliver.drools.DroolsConstants
+import org.kuali.ole.deliver.util.DroolsResponse
+
+rule "LaptopdisDigitalRecCheckoutNew1"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() < 3)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew1");
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew2"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() >= 3)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew2");
+$d.addErrorMessage("Patron has more than 3 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew5"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() < 20)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew5");
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew6"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() >= 20)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew6");
+$d.addErrorMessage("Patron has more than 20 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew7"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew7");
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew8"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew8");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew13"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() < 25)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew13");
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew14"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() >= 25)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew14");
+$d.addErrorMessage("Patron has more than 25 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew15"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew15");
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew16"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew16");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew17"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() < 55)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew17");
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew18"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() >= 55)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew18");
+$d.addErrorMessage("Patron has more than 55 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew19"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() < 100)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew19");
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNew20"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() >= 100)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNew20");
+$d.addErrorMessage("Patron has more than 100 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("98-D",null);
+ end
+
+
+rule "LaptopdisDigitalRecCheckoutNewAlumini1"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMINI"),getTotalLoanedItemsCount() < 6)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNewAlumini1");
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNewAlumini2"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMINI"),getTotalLoanedItemsCount() >= 6)
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNewAlumini2");
+$d.addErrorMessage("Patron has more than 6 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("98-D",null);
+ end
+
+rule "LaptopdisDigitalRecCheckoutNewLIB"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+$i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
+
+then
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNewLIB");
+$l.loanPeriod("98-D",null);
+ end
