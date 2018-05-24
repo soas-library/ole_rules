@@ -1,0 +1,264 @@
+package org.kuali.ole.deliver.checkout
+
+import org.kuali.ole.deliver.bo.OlePatronDocument
+import org.kuali.ole.deliver.util.OleItemRecordForCirc
+import org.kuali.ole.deliver.util.ErrorMessage
+import org.kuali.ole.OLEConstants
+import org.kuali.ole.deliver.bo.OleLoanDocument
+import org.kuali.ole.deliver.drools.DroolsConstants
+import org.kuali.ole.deliver.util.DroolsResponse
+
+rule "CarrelHeadMicroLaptopNew1"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() < 3)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew1");
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew2"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() >= 3)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew2");
+$d.addErrorMessage("Patron has more than 3 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew5"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() < 20)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew5");
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew6"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() >= 20)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew6");
+$d.addErrorMessage("Patron has more than 20 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew7"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew7");
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew8"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew8");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew13"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() < 25)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew13");
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew14"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() >= 25)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew14");
+$d.addErrorMessage("Patron has more than 25 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew16"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew16");
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew17"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew17");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew15"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() < 55)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew15");
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew18"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() >= 55)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew18");
+$d.addErrorMessage("Patron has more than 55 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew19"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() < 100)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew19");
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNew20"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() >= 100)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNew20");
+$d.addErrorMessage("Patron has more than 100 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("12-H",null);
+ end
+
+
+rule "CarrelHeadMicroLaptopNewAlumni1"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() < 6)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNewAlumni1");
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNewAlumni2"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() >= 6)
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNewAlumni2");
+$d.addErrorMessage("Patron has more than 6 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("12-H",null);
+ end
+
+rule "CarrelHeadMicroLaptopNewLIB1"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+$i: OleItemRecordForCirc (getItemType() in ("LAPTOP","HEAD","MICRO"))
+
+then
+$l.setCirculationPolicyId("CarrelHeadMicroLaptopNewLIB1");
+$l.loanPeriod("12-H",null);
+ end

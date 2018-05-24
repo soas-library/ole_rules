@@ -1,0 +1,281 @@
+package org.kuali.ole.deliver.checkout
+
+import org.kuali.ole.deliver.bo.OlePatronDocument
+import org.kuali.ole.deliver.util.OleItemRecordForCirc
+import org.kuali.ole.deliver.util.ErrorMessage
+import org.kuali.ole.OLEConstants
+import java.util.Date
+import java.lang.String
+import java.text.SimpleDateFormat
+import org.kuali.ole.deliver.bo.OleLoanDocument
+import org.kuali.ole.deliver.drools.DroolsConstants
+import org.kuali.ole.deliver.util.DroolsResponse
+
+rule "PeripheralNew1"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() < 3)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew1");
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew2"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() >= 3)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew2");
+$d.addErrorMessage("Patron has more than 3 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew5"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() < 20)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew5");
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew6"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() >= 20)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew6");
+$d.addErrorMessage("Patron has more than 20 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew7"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew7");
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew8"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew8");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew13"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() < 25)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew13");
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew14"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() >= 25)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew14");
+$d.addErrorMessage("Patron has more than 25 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew16"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","SPORS"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew16");
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew17"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","SPORS"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew17");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew15"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() < 55)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew15");
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew18"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() >= 55)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew18");
+$d.addErrorMessage("Patron has more than 55 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew19"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() < 100)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew19");
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNew20"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() >= 100)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNew20");
+$d.addErrorMessage("Patron has more than 100 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("1-D",null);
+ end
+
+
+rule "PeripheralNewAlumni1"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() < 6)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNewAlumni1");
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNewAlumni2"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() >= 6)
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNewAlumni2");
+$d.addErrorMessage("Patron has more than 6 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("1-D",null);
+ end
+
+rule "PeripheralNewLIB1"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralNewLIB1");
+$l.loanPeriod("1-D",null);
+ end
+
+ rule "PeripheralRef1"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("REF"))
+$i: OleItemRecordForCirc (getItemType() in ("PERIPHERAL"))
+
+then
+$l.setCirculationPolicyId("PeripheralRef1");
+$l.loanPeriod("1-D",null);
+ end

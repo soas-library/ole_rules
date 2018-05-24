@@ -1,0 +1,520 @@
+package org.kuali.ole.deliver.checkout
+
+import org.kuali.ole.deliver.bo.OlePatronDocument
+import org.kuali.ole.deliver.util.OleItemRecordForCirc
+import org.kuali.ole.deliver.util.ErrorMessage
+import org.kuali.ole.OLEConstants
+import org.kuali.ole.deliver.bo.OleLoanDocument
+import org.kuali.ole.deliver.drools.DroolsConstants
+import org.kuali.ole.deliver.util.DroolsResponse
+
+rule "MMLongCheckoutExtSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() < 3)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutExtSuccess");
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutExtFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() >= 3)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutExtFailure");
+$d.addErrorMessage("Patron has more than 3 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutStuSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() < 20)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutStuSuccess");
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutStuFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() >= 20)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutStuFailure");
+$d.addErrorMessage("Patron has more than 20 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutFullSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutFullSuccess");
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutFullFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutFullFailure");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutStuxSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() < 25)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutStuxSuccess");
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutStuxFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() >= 25)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutStuxFailure");
+$d.addErrorMessage("Patron has more than 25 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutSchlrResastSporsSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutSchlrResastSporsSuccess");
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutSchlrResastSporsFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutSchlrResastSporsFailure");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutFullxSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() < 55)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutFullxSuccess");
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutFullxFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() >= 55)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutFullxFailure");
+$d.addErrorMessage("Patron has more than 55 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutIllSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() < 100)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutIllSuccess");
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutIllFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() >= 100)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutIllFailure");
+$d.addErrorMessage("Patron has more than 100 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("90-D",null);
+ end
+
+
+rule "MMLongCheckoutAlumniSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() < 6)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutAlumniSuccess");
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutAlumniFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() >= 6)
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutAlumniFailure");
+$d.addErrorMessage("Patron has more than 6 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("90-D",null);
+ end
+
+rule "MMLongCheckoutLibSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+$i: OleItemRecordForCirc (getItemType() in ("MM_LONG"))
+
+then
+$l.setCirculationPolicyId("MMLongCheckoutLibSuccess");
+$l.loanPeriod("90-D",null);
+ end
+ 
+
+rule "MMShortCheckoutExtSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() < 3)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutExtSuccess");
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutExtFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT"),getTotalLoanedItemsCount() >= 3)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutExtFailure");
+$d.addErrorMessage("Patron has more than 3 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutStuSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() < 20)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutStuSuccess");
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutStuFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() >= 20)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutStuFailure");
+$d.addErrorMessage("Patron has more than 20 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutFullSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutFullSuccess");
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutFullFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutFullFailure");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutStuxSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() < 25)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutStuxSuccess");
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutStuxFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),getTotalLoanedItemsCount() >= 25)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutStuxFailure");
+$d.addErrorMessage("Patron has more than 25 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutSchlrResastSporsSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),getTotalLoanedItemsCount() < 50)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutSchlrResastSporsSuccess");
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutSchlrResastSporsFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("SCHLR","RESAST","SPORS"),getTotalLoanedItemsCount() >= 50)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutSchlrResastSporsFailure");
+$d.addErrorMessage("Patron has more than 50 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutFullxSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() < 55)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutFullxSuccess");
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutFullxFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),getTotalLoanedItemsCount() >= 55)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutFullxFailure");
+$d.addErrorMessage("Patron has more than 55 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutIllSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() < 100)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutIllSuccess");
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutIllFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"),getTotalLoanedItemsCount() >= 100)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutIllFailure");
+$d.addErrorMessage("Patron has more than 100 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("14-D",null);
+ end
+
+
+rule "MMShortCheckoutAlumniSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() < 6)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutAlumniSuccess");
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutAlumniFailure"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() >= 6)
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutAlumniFailure");
+$d.addErrorMessage("Patron has more than 6 items checked out");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+$l.loanPeriod("14-D",null);
+ end
+
+rule "MMShortCheckoutLibSuccess"
+agenda-group "checkout validation"
+activation-group "checkout validation"
+when
+$l: OleLoanDocument()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+$i: OleItemRecordForCirc (getItemType() in ("MM_SHORT"))
+
+then
+$l.setCirculationPolicyId("MMShortCheckoutLibSuccess");
+$l.loanPeriod("14-D",null);
+ end
