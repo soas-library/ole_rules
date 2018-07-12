@@ -8,7 +8,7 @@ import org.kuali.ole.deliver.drools.DroolsConstants
 import org.kuali.ole.deliver.util.DroolsResponse
 
 
-rule "CDE3CheckOutValidation1"
+rule "CDE6CheckOutValidation1"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
@@ -20,11 +20,11 @@ $p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),
 
 then
 $l.setCirculationPolicyId("CDE3CheckOutValidation1");
-$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
  end
 
 
-rule "CDE3CheckOutValidation2"
+rule "CDE6CheckOutValidation2"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
@@ -38,10 +38,10 @@ then
 $l.setCirculationPolicyId("CDE3CheckOutValidation2");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $d.addErrorMessage("Patron has more than 4 CD/DVD");
-$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
  end
 
-rule "CDE3CheckOutValidation3"
+rule "CDE6CheckOutValidation3"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
@@ -54,10 +54,10 @@ then
 $l.setCirculationPolicyId("CDE3CheckOutValidation3");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $d.addErrorMessage("Patron has more than 25 items");
-$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
  end
 
-rule "CDE3CheckOutValidation4"
+rule "CDE6CheckOutValidation4"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
@@ -69,11 +69,11 @@ $p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),
 
 then
 $l.setCirculationPolicyId("CDE3CheckOutValidation4");
-$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
  end
 
 
-rule "CDE3CheckOutValidation5"
+rule "CDE6CheckOutValidation5"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
@@ -87,10 +87,10 @@ then
 $l.setCirculationPolicyId("CDE3CheckOutValidation5");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $d.addErrorMessage("Patron has more than 4 CD/DVD");
-$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
  end
 
-rule "CDE3CheckOutValidation6"
+rule "CDE6CheckOutValidation6"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
@@ -103,6 +103,6 @@ then
 $l.setCirculationPolicyId("CDE3CheckOutValidation6");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $d.addErrorMessage("Patron has more than 55 items");
-$l.loanPeriod("3-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
  end
 
