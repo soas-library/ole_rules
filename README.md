@@ -6,13 +6,13 @@ Soas's Drools rules are backed up on Subversion and on GitHub ([https://github.c
 
 OLE's technical documentation for Drools is in [http://site.kuali.org/ole/2.0-r25025/reference/pdfs/DroolsTechnicalDocument.pdf](http://site.kuali.org/ole/2.0-r25025/reference/pdfs/DroolsTechnicalDocument.pdf)
 
-# Reading the rules:
+## Reading the rules:
 
 The Drools rules are kept on the OLE servers at /usr/local/2ndhome/kuali/main/prd/olefs-webapp/rules/
 
 Go to this location and download a copy of all the directories in that location. The Drools rules will be present as .drl files.
 
-# Updating the rules:
+## Updating the rules:
 
 To update the Drools rules, edit the .drl files to reflect your new rules. 
 
