@@ -10,9 +10,12 @@ activation-group "pickup-location"
 when
 
  
- $pr : OLEPlaceRequestForm(getItemType() in ("LONG","ONE_WEEK") , getItemLocation() in ("MAIN","EGHAM","DAGENHAM"))
+ $pr : OLEPlaceRequestForm(getItemType() in ("LONG","ONE_WEEK") , getItemLocation() in ("MAIN","EGHAM","RAINHAM"))
+ $d : DroolsResponse()
 
 then
+ 
+ $d.setRuleMatched(true);
  $pr.setPickUpLocation("SOAS_MAIN");
 
 

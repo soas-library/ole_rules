@@ -16,8 +16,8 @@ when
 $l: OleLoanDocument(Integer.valueOf(getNumberOfRenewals()) < 10)
 $n: NoticeInfo()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT","SCHLR","STUX","ALUMINI"))
-$i: OleItemRecordForCirc (getItemType() in ("LONG"), $z: getOleDeliverRequestBo(), null == $z)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT","SCHLR","STUX","ALUMNI"))
+$i: OleItemRecordForCirc (getItemType() in ("LONG"))
 
 
 then
@@ -35,7 +35,7 @@ when
 $l: OleLoanDocument(Integer.valueOf(getNumberOfRenewals()) >= 10)
 $n: NoticeInfo()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT","SCHLR","STUX","ALUMINI"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("EXT","SCHLR","STUX","ALUMNI"))
 $i: OleItemRecordForCirc (getItemType() in ("LONG"))
 
 then

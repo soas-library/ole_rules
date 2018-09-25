@@ -17,12 +17,51 @@ when
 
 $l: OleLoanDocument()
 $n: NoticeInfo()
-$d : DroolsResponse()
+$d: DroolsResponse()
 $i: OleItemRecordForCirc ($s: getItemStatusRecord(),null != $s, $s.getCode() in ("LOST"))
 
 then
  $d.setRuleMatched(true);
  $d.addErrorMessage("Item is Lost.Hence It cannot be renewed.");
 $d.addErrorMessageCode("ErrorMessageFromRule");
+ $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
  end
+
+
+rule "Renewal_for_Carrel"
+agenda-group "renewal validation"
+activation-group "renewal validation"
+when
+
+$l: OleLoanDocument()
+$n: NoticeInfo()
+$d : DroolsResponse()
+$i: OleItemRecordForCirc (getItemType() in ("CARREL"))
+
+then
+ $d.setRuleMatched(true);
+ $d.addErrorMessage("Item Type is Carrel hence it cannot be renewed.");
+$d.addErrorMessageCode("ErrorMessageFromRule");
+
+ end
+
+
+rule "Renewal_check_for_All"
+agenda-group "renewal validation"
+activation-group "renewal validation"
+when
+
+$l: OleLoanDocument()
+$n: NoticeInfo()
+$d: DroolsResponse()
+$i: OleItemRecordForCirc ($z: getOleDeliverRequestBo(), null != $z)
+
+then
+ $d.setRuleMatched(true);
+ $l.setCirculationPolicyId("Renewal_check_for_All");
+ $d.addErrorMessage("Item cannot be renewed. It has been requested.");
+ $d.addErrorMessageCode("ErrorMessageFromRule");
+
+ end
+
 

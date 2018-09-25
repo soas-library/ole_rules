@@ -17,7 +17,7 @@ $l: OleLoanDocument(Integer.valueOf(getNumberOfRenewals()) < 10)
 $n: NoticeInfo()
 $d : DroolsResponse()
 $p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX","STUX"))
-$i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK"))
+$i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK"), $z: getOleDeliverRequestBo(), null == $z)
 
 then
  $d.setRuleMatched(true);

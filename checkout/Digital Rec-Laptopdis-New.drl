@@ -219,31 +219,31 @@ $l.loanPeriod("98-D",null);
  end
 
 
-rule "LaptopdisDigitalRecCheckoutNewAlumini1"
+rule "LaptopdisDigitalRecCheckoutNewAlumni1"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
 $l: OleLoanDocument()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMINI"),getTotalLoanedItemsCount() < 6)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() < 6)
 $i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
 
 then
-$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNewAlumini1");
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNewAlumni1");
 $l.loanPeriod("98-D",null);
  end
 
-rule "LaptopdisDigitalRecCheckoutNewAlumini2"
+rule "LaptopdisDigitalRecCheckoutNewAlumni2"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
 $l: OleLoanDocument()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMINI"),getTotalLoanedItemsCount() >= 6)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() >= 6)
 $i: OleItemRecordForCirc (getItemType() in ("DIS_RECORDER","DIS_LAPTOP"))
 
 then
-$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNewAlumini2");
+$l.setCirculationPolicyId("LaptopdisDigitalRecCheckoutNewAlumni2");
 $d.addErrorMessage("Patron has more than 6 items checked out");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $l.loanPeriod("98-D",null);

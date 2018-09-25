@@ -99,31 +99,31 @@ $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $l.loanPeriod("30-D","7-D");
  end
 
-rule "1MLCheckOutValidationNewAlumini1"
+rule "1MLCheckOutValidationNewAlumni1"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
 $l: OleLoanDocument()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMINI"),getTotalLoanedItemsCount() < 6)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() < 6)
 $i: OleItemRecordForCirc (getItemType() in ("LONG"))
 
 then
-$l.setCirculationPolicyId("1MLCheckOutValidationNewAlumini1");
+$l.setCirculationPolicyId("1MLCheckOutValidationNewAlumni1");
 $l.loanPeriod("30-D","7-D");
  end
 
-rule "1MLCheckOutValidationNewAlumini2"
+rule "1MLCheckOutValidationNewAlumni2"
 agenda-group "checkout validation"
 activation-group "checkout validation"
 when
 $l: OleLoanDocument()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMINI"),getTotalLoanedItemsCount() >= 6)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("ALUMNI"),getTotalLoanedItemsCount() >= 6)
 $i: OleItemRecordForCirc (getItemType() in ("LONG"))
 
 then
-$l.setCirculationPolicyId("1MLCheckOutValidationNewAlumini2");
+$l.setCirculationPolicyId("1MLCheckOutValidationNewAlumni2");
 $d.addErrorMessage("Patron has more than 6 items checked out");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $l.loanPeriod("30-D","7-D");
