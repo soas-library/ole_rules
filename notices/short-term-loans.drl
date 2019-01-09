@@ -12,6 +12,7 @@ package org.kuali.ole.deliver.checkout
   activation-group "notice generation"
   when
   $n: NoticeInfo(getNoticeType() == DroolsConstants.SHORT_TERM_LOANS_NOTICE_CONFIG)
+  $i: ItemRecord(getDueDateTime()!= null, !getClaimsReturnedFlag(),$f:getItemTypeRecord(),null!=$f,$f.getCode() in ("ONE_WEEK","LONG","THREE_DAYS"))
   then
   $n.addInfo(OLEConstants.COURTESY_NOTICE, DroolsConstants.NUMBER_OF_COURTESY_NOTICES_TO_BE_SENT, "1");
   $n.addInfo(OLEConstants.COURTESY_NOTICE, DroolsConstants.INTERVAL_TO_GENERATE_NOTICE_FOR_COURTESY, "2");
@@ -31,6 +32,35 @@ package org.kuali.ole.deliver.checkout
   $n.addInfo(OLEConstants.OVERDUE_NOTICE, OLEConstants.OVERDUE_NOTICE_CONTENT_CONFIG_NAME,"Overdue Notice");
   $n.addInfo(OLEConstants.LOST_NOTICE, DroolsConstants.REPLACEMENT_BILL_AMT, "85");
   $n.addInfo(OLEConstants.LOST_NOTICE, OLEConstants.LOST_NOTICE_CONTENT_CONFIG_NAME,"Lost Notice");
+  $n.setIntervalType("D");
+
+   end
+
+  rule "Courtsey Notice MM Rule"
+  agenda-group "notice generation"
+  activation-group "notice generation"
+  when
+  $n: NoticeInfo(getNoticeType() == DroolsConstants.SHORT_TERM_LOANS_NOTICE_CONFIG)
+  $i: ItemRecord(getDueDateTime()!= null, !getClaimsReturnedFlag(),$f:getItemTypeRecord(),null!=$f,$f.getCode() in ("MM"))
+  then
+  $n.addInfo(OLEConstants.COURTESY_NOTICE, DroolsConstants.NUMBER_OF_COURTESY_NOTICES_TO_BE_SENT, "1");
+  $n.addInfo(OLEConstants.COURTESY_NOTICE, DroolsConstants.INTERVAL_TO_GENERATE_NOTICE_FOR_COURTESY, "3");
+  $n.addInfo(OLEConstants.COURTESY_NOTICE, OLEConstants.COURTESY_NOTICE_CONTENT_CONFIG_NAME,"Multimedia Courtesy Notice");
+  $n.setIntervalType("D");
+   end
+  
+  
+  rule "Overdue Notice MM"
+  agenda-group "notice generation"
+  when
+  $n: NoticeInfo(getNoticeType() == DroolsConstants.SHORT_TERM_LOANS_NOTICE_CONFIG)
+  $i: ItemRecord(getDueDateTime()!= null, !getClaimsReturnedFlag(),$f:getItemTypeRecord(),null!=$f,$f.getCode() in ("MM"))
+  then
+  $n.addInfo(OLEConstants.OVERDUE_NOTICE, DroolsConstants.NUMBER_OF_OVERDUE_NOTICES_TO_BE_SENT, "3");
+  $n.addInfo(OLEConstants.OVERDUE_NOTICE, DroolsConstants.INTERVAL_TO_GENERATE_NOTICE_FOR_OVERDUE, "2,4,6,14");
+  $n.addInfo(OLEConstants.OVERDUE_NOTICE, OLEConstants.OVERDUE_NOTICE_CONTENT_CONFIG_NAME,"Multimedia Overdue Notice");
+  $n.addInfo(OLEConstants.LOST_NOTICE, DroolsConstants.REPLACEMENT_BILL_AMT, "10");
+  $n.addInfo(OLEConstants.LOST_NOTICE, OLEConstants.LOST_NOTICE_CONTENT_CONFIG_NAME,"Multimedia Lost Notice");
   $n.setIntervalType("D");
 
    end

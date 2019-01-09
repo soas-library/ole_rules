@@ -15,7 +15,7 @@ import org.kuali.ole.deliver.drools.DroolsConstants;
   $i: ItemRecord(getDueDateTime()!= null)
   then
   $n.addInfo(OLEConstants.RECALL_COURTESY_NOTICE, DroolsConstants.NUMBER_OF_COURTESY_NOTICES_TO_BE_SENT, "1");
-  $n.addInfo(OLEConstants.RECALL_COURTESY_NOTICE, DroolsConstants.INTERVAL_TO_GENERATE_NOTICE_FOR_COURTESY, "2");
+  $n.addInfo(OLEConstants.RECALL_COURTESY_NOTICE, DroolsConstants.INTERVAL_TO_GENERATE_NOTICE_FOR_COURTESY, "3");
   $n.addInfo(OLEConstants.RECALL_COURTESY_NOTICE, OLEConstants.COURTESY_NOTICE_CONTENT_CONFIG_NAME,"Courtesy Notice");
    end
 
