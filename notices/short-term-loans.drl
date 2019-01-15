@@ -15,7 +15,7 @@ package org.kuali.ole.deliver.checkout
   $i: ItemRecord(getDueDateTime()!= null, !getClaimsReturnedFlag(),$f:getItemTypeRecord(),null!=$f,$f.getCode() in ("ONE_WEEK","LONG","THREE_DAYS"))
   then
   $n.addInfo(OLEConstants.COURTESY_NOTICE, DroolsConstants.NUMBER_OF_COURTESY_NOTICES_TO_BE_SENT, "1");
-  $n.addInfo(OLEConstants.COURTESY_NOTICE, DroolsConstants.INTERVAL_TO_GENERATE_NOTICE_FOR_COURTESY, "2");
+  $n.addInfo(OLEConstants.COURTESY_NOTICE, DroolsConstants.INTERVAL_TO_GENERATE_NOTICE_FOR_COURTESY, "3");
   $n.addInfo(OLEConstants.COURTESY_NOTICE, OLEConstants.COURTESY_NOTICE_CONTENT_CONFIG_NAME,"Courtesy Notice");
   $n.setIntervalType("D");
    end
