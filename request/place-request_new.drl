@@ -15,16 +15,16 @@ agenda-group "place-request"
 when
 $n: NoticeInfo()
 $d : DroolsResponse()
-$dr: OleDeliverRequestBo(getItemType() in ("LONG"),!isClaimsReturnedFlag(),
+$dr: OleDeliverRequestBo(getItemType() in ("LONG","REF"),getItemLocation() in ("MAIN","Level E"),!isClaimsReturnedFlag(),
 getRequestTypeCode() in ("Recall/Hold Request"))
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","RESAST","SPORS"),getRequestedItemRecordsCount()<3,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()<5,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
 
 then
 $d.setRuleMatched(true);
 $n.setNoticeType(OLEConstants.NOTICE_RECALL);
 $d.getDroolsExchange().addToContext("requestExpirationDays",90);
 $d.getDroolsExchange().addToContext("minimumLoanPeriod","0-D");
-$d.getDroolsExchange().addToContext("recallLoanPeriod","7-D");
+$d.getDroolsExchange().addToContext("recallLoanPeriod","14-D");
 $d.getDroolsExchange().addToContext(OLEConstants.RECALL_NOTICE_CONTENT_CONFIG_NAME,"recall-notice");
 $d.getDroolsExchange().addToContext(OLEConstants.REQUEST_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"Request Expiration Notice");
 $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_NOTICE_CONTENT_CONFIG_NAME,"On Hold Notice");
@@ -37,8 +37,8 @@ agenda-group "place-request"
 when
 $n: NoticeInfo()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","EXT","ALUMNI","RESAST","SPORS"),getRequestedItemRecordsCount()<3)
-$i: OleDeliverRequestBo(getItemType() in ("LONG"),isClaimsReturnedFlag(),
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()<5)
+$i: OleDeliverRequestBo(getItemType() in ("LONG","REF"),getItemLocation() in ("MAIN","Level E"),isClaimsReturnedFlag(),
 getRequestTypeCode() in ("Recall/Hold Request"))
 
 then
@@ -54,8 +54,8 @@ agenda-group "place-request"
 when
 $n: NoticeInfo()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","EXT","ALUMNI","RESAST","SPORS"),getRequestedItemRecordsCount()>=3)
-$i: OleDeliverRequestBo(getItemType() in ("LONG"),
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()>=5)
+$i: OleDeliverRequestBo(getItemType() in ("LONG","REF"),getItemLocation() in ("MAIN","Level E"),
 getRequestTypeCode() in ("Recall/Hold Request"))
 
 then
@@ -70,9 +70,9 @@ agenda-group "place-request"
 when
 $n: NoticeInfo()
 $d : DroolsResponse()
-$dr: OleDeliverRequestBo(getItemType() in ("LONG"),
+$dr: OleDeliverRequestBo(getItemType() in ("LONG","REF"),getItemLocation() in ("MAIN","Level E"),
 getRequestTypeCode() in ("Recall/Hold Request"))
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","EXT","ALUMNI","RESAST","SPORS"), $dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"), $dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
 
 then
 $d.setRuleMatched(true);
@@ -87,7 +87,7 @@ when
 $n: NoticeInfo()
 $d : DroolsResponse()
 $dr: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),!isClaimsReturnedFlag(),getRequestTypeCode() in ("Recall/Hold Request"))
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX","STU","FULLX","FULL","RESAST","SPORS"),getRequestedItemRecordsCount() < 3,
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount() < 5,
 $dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
 
 
@@ -96,7 +96,7 @@ $d.setRuleMatched(true);
 $n.setNoticeType(OLEConstants.NOTICE_RECALL);
 $d.getDroolsExchange().addToContext("requestExpirationDays",90);
 $d.getDroolsExchange().addToContext("minimumLoanPeriod","0-D");
-$d.getDroolsExchange().addToContext("recallLoanPeriod","7-D");
+$d.getDroolsExchange().addToContext("recallLoanPeriod","14-D");
 $d.getDroolsExchange().addToContext(OLEConstants.RECALL_NOTICE_CONTENT_CONFIG_NAME,"recall-notice");
 $d.getDroolsExchange().addToContext(OLEConstants.REQUEST_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"Request Expiration Notice");
 $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_NOTICE_CONTENT_CONFIG_NAME,"On Hold Notice");
@@ -109,8 +109,8 @@ agenda-group "place-request"
 when
 $n: NoticeInfo()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX","STU","FULLX","FULL","RESAST","SPORS"),getRequestedItemRecordsCount() < 3)
-$i: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),isClaimsReturnedFlag(),
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount() < 5)
+$i: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),getItemLocation() in ("MAIN","Level E"),isClaimsReturnedFlag(),
 getRequestTypeCode() in ("Recall/Hold Request"))
 
 then
@@ -125,8 +125,8 @@ $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
  when
  $n: NoticeInfo()
  $d : DroolsResponse()
- $p: OlePatronDocument(getBorrowerTypeCode() in ("STUX","STU","FULLX","FULL","RESAST","SPORS"),getRequestedItemRecordsCount() >= 3)
- $i: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),
+ $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount() >= 5)
+ $i: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),getItemLocation() in ("MAIN","Level E"),
  getRequestTypeCode() in ("Recall/Hold Request"))
 
  then
@@ -141,9 +141,9 @@ $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
  when
  $n: NoticeInfo()
  $d : DroolsResponse()
- $i: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),
+ $i: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),getItemLocation() in ("MAIN","Level E"),
  getRequestTypeCode() in ("Recall/Hold Request"))
- $p: OlePatronDocument(getBorrowerTypeCode() in ("STUX","STU","FULLX","FULL","RESAST","SPORS"),$i!=null,getLoanedPatronBorrowerType($i.getItemId()) in ("ILL"))
+ $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),$i!=null,getLoanedPatronBorrowerType($i.getItemId()) in ("ILL"))
  
  then
  $d.setRuleMatched(true);
@@ -156,9 +156,9 @@ rule "2W_1M_6W_3MLoanHoldRequest"
   when
   $n: NoticeInfo()
   $d : DroolsResponse()
-  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),!isClaimsReturnedFlag(),
+  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK","REF"),getItemLocation() in ("MAIN","Level E"),!isClaimsReturnedFlag(),
   getRequestTypeCode() in ("Hold/Hold Request"))
-  $p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getRequestedItemRecordsCount()<3,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()<5,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
 
   then
   $d.setRuleMatched(true);
@@ -175,9 +175,9 @@ $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT
   when
   $n: NoticeInfo()
   $d : DroolsResponse()
-  $i: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),isClaimsReturnedFlag(),
+  $i: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK","REF"),getItemLocation() in ("MAIN","Level E"),isClaimsReturnedFlag(),
   getRequestTypeCode() in ("Hold/Hold Request"))
-  $p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getRequestedItemRecordsCount()<3)
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()<5)
 
 
   then
@@ -193,8 +193,8 @@ $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT
   when
   $n: NoticeInfo()
   $d : DroolsResponse()
-  $p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getRequestedItemRecordsCount()>=3)
-  $i: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()>=5)
+  $i: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK","REF"),getItemLocation() in ("MAIN","Level E"),
   getRequestTypeCode() in ("Hold/Hold Request"))
 
   then
@@ -208,9 +208,9 @@ rule "2W_1M_6W_3MLoanHoldRequest5"
   when
   $n: NoticeInfo()
   $d : DroolsResponse()
-  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),
+  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK","REF"),getItemLocation() in ("MAIN","Level E"),
   getRequestTypeCode() in ("Hold/Hold Request"))
-  $p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
 
   then
   $d.setRuleMatched(true);
@@ -226,7 +226,7 @@ rule "2W_1M_6W_3MLoanHoldRequest5"
   $n: NoticeInfo()
   $d : DroolsResponse()
   $p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"))
-  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),!isClaimsReturnedFlag(),
+  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK","REF"),!isClaimsReturnedFlag(),
   getRequestTypeCode() in ("Hold/Hold Request"))
 
   then
@@ -245,7 +245,7 @@ $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT
   $n: NoticeInfo()
   $d : DroolsResponse()
   $p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"))
-  $i: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),isClaimsReturnedFlag(),
+  $i: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK","REF"),isClaimsReturnedFlag(),
   getRequestTypeCode() in ("Hold/Hold Request"))
 
   then
@@ -262,7 +262,7 @@ $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT
   $n: NoticeInfo()
   $d : DroolsResponse()
   $p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
-  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),!isClaimsReturnedFlag(),
+  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK","REF"),!isClaimsReturnedFlag(),
   getRequestTypeCode() in ("Hold/Hold Request","Recall/Hold Request"))
 
   then
@@ -281,7 +281,7 @@ $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT
   $n: NoticeInfo()
   $d : DroolsResponse()
   $p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
-  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),isClaimsReturnedFlag(),
+  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK","REF"),isClaimsReturnedFlag(),
   getRequestTypeCode() in ("Hold/Hold Request"))
 
   then
@@ -297,20 +297,254 @@ $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT
   $n: NoticeInfo()
   $d : DroolsResponse()
   $p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
-  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),!isClaimsReturnedFlag(),
+  $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK","REF"),!isClaimsReturnedFlag(),
   getRequestTypeCode() in ("Recall/Hold Request"))
 
   then
   $d.setRuleMatched(true);
   $d.getDroolsExchange().addToContext("requestExpirationDays",90);
 $d.getDroolsExchange().addToContext("minimumLoanPeriod","0-D");
-$d.getDroolsExchange().addToContext("recallLoanPeriod","7-D");
+$d.getDroolsExchange().addToContext("recallLoanPeriod","14-D");
 $d.getDroolsExchange().addToContext(OLEConstants.RECALL_NOTICE_CONTENT_CONFIG_NAME,"recall-notice");
 $d.getDroolsExchange().addToContext(OLEConstants.REQUEST_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"Request Expiration Notice");
 $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_NOTICE_CONTENT_CONFIG_NAME,"On Hold Notice");
 $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"On Hold Expiration Notice");
 $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT_CONFIG_NAME,"On Hold Courtesy Notice");
    end
+
+
+rule "3DLoanRecallRequest_new"
+agenda-group "place-request"
+when
+$n: NoticeInfo()
+$d : DroolsResponse()
+$dr: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),getItemLocation() in ("MAIN","Level E"),!isClaimsReturnedFlag(),
+getRequestTypeCode() in ("Recall/Hold Request"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()<5,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
+
+then
+$d.setRuleMatched(true);
+$n.setNoticeType(OLEConstants.NOTICE_RECALL);
+$d.getDroolsExchange().addToContext("requestExpirationDays",90);
+$d.getDroolsExchange().addToContext("minimumLoanPeriod","0-D");
+$d.getDroolsExchange().addToContext("recallLoanPeriod","14-D");
+$d.getDroolsExchange().addToContext(OLEConstants.RECALL_NOTICE_CONTENT_CONFIG_NAME,"recall-notice");
+$d.getDroolsExchange().addToContext(OLEConstants.REQUEST_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"Request Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_NOTICE_CONTENT_CONFIG_NAME,"On Hold Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"On Hold Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT_CONFIG_NAME,"On Hold Courtesy Notice");
+ end
+
+rule "3DLoanRecallRequest_new1"
+agenda-group "place-request"
+when
+$n: NoticeInfo()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()<5)
+$i: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),getItemLocation() in ("MAIN","Level E"),isClaimsReturnedFlag(),
+getRequestTypeCode() in ("Recall/Hold Request"))
+
+then
+$d.setRuleMatched(true);
+$d.addErrorMessage("Item has been claimed as returned. So item is temporarily unavailable for circulation.");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+
+ end
+
+
+rule "3DLoanRecallRequest_new2"
+agenda-group "place-request"
+when
+$n: NoticeInfo()
+$d : DroolsResponse()
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()>=5)
+$i: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),getItemLocation() in ("MAIN","Level E"),
+getRequestTypeCode() in ("Recall/Hold Request"))
+
+then
+$d.setRuleMatched(true);
+$d.addErrorMessage("The patron has reached the maximum Request limit");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+ end
+
+
+rule "3DLoanRecallRequest_new3"
+agenda-group "place-request"
+when
+$n: NoticeInfo()
+$d : DroolsResponse()
+$dr: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),getItemLocation() in ("MAIN","Level E"),
+getRequestTypeCode() in ("Recall/Hold Request"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"), $dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
+
+then
+$d.setRuleMatched(true);
+$d.addErrorMessage("Items on LOAN to ILL patrons CANT be 'requested' (Recalled or OnHOLD)");
+$d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+ end
+
+
+rule "3DLoanHoldRequest"
+  agenda-group "place-request"
+  when
+  $n: NoticeInfo()
+  $d : DroolsResponse()
+  $dr: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),getItemLocation() in ("MAIN","Level E"),!isClaimsReturnedFlag(),
+  getRequestTypeCode() in ("Hold/Hold Request"))
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()<5,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
+
+  then
+  $d.setRuleMatched(true);
+  $d.getDroolsExchange().addToContext("requestExpirationDays",90);
+$d.getDroolsExchange().addToContext(OLEConstants.RECALL_NOTICE_CONTENT_CONFIG_NAME,"recall-notice");
+$d.getDroolsExchange().addToContext(OLEConstants.REQUEST_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"Request Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_NOTICE_CONTENT_CONFIG_NAME,"On Hold Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"On Hold Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT_CONFIG_NAME,"On Hold Courtesy Notice");
+   end
+
+  rule "3DLoanHOLDRequest1"
+  agenda-group "place-request"
+  when
+  $n: NoticeInfo()
+  $d : DroolsResponse()
+  $i: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),getItemLocation() in ("MAIN","Level E"),isClaimsReturnedFlag(),
+  getRequestTypeCode() in ("Hold/Hold Request"))
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()<5)
+
+
+  then
+  $d.setRuleMatched(true);
+  $d.addErrorMessage("Item has been claimed as returned. So item is temporarily unavailable for circulation.");
+  $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+
+   end
+
+
+  rule "3DLoanHoldRequest2"
+  agenda-group "place-request"
+  when
+  $n: NoticeInfo()
+  $d : DroolsResponse()
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),getRequestedItemRecordsCount()>=5)
+  $i: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),getItemLocation() in ("MAIN","Level E"),
+  getRequestTypeCode() in ("Hold/Hold Request"))
+
+  then
+  $d.setRuleMatched(true);
+  $d.addErrorMessage("The patron has reached the maximum Request limit");
+  $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+   end
+
+rule "3DLoanHoldRequest5"
+  agenda-group "place-request"
+  when
+  $n: NoticeInfo()
+  $d : DroolsResponse()
+  $dr: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),getItemLocation() in ("MAIN","Level E"),
+  getRequestTypeCode() in ("Hold/Hold Request"))
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR","REF"),$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
+
+  then
+  $d.setRuleMatched(true);
+  $d.addErrorMessage("Items on LOAN to ILL patrons CANT be 'requested' (Recalled or OnHOLD)");
+  $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION); 
+
+   end
+
+
+ rule "3DLoanHoldRequest3"
+  agenda-group "place-request"
+  when
+  $n: NoticeInfo()
+  $d : DroolsResponse()
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"))
+  $dr: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),!isClaimsReturnedFlag(),
+  getRequestTypeCode() in ("Hold/Hold Request"))
+
+  then
+  $d.setRuleMatched(true);
+  $d.getDroolsExchange().addToContext("requestExpirationDays",90);
+$d.getDroolsExchange().addToContext(OLEConstants.RECALL_NOTICE_CONTENT_CONFIG_NAME,"recall-notice");
+$d.getDroolsExchange().addToContext(OLEConstants.REQUEST_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"Request Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_NOTICE_CONTENT_CONFIG_NAME,"On Hold Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"On Hold Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT_CONFIG_NAME,"On Hold Courtesy Notice");
+   end
+
+  rule "3DLoanHOLDRequest4"
+  agenda-group "place-request"
+  when
+  $n: NoticeInfo()
+  $d : DroolsResponse()
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("ILL"))
+  $i: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),isClaimsReturnedFlag(),
+  getRequestTypeCode() in ("Hold/Hold Request"))
+
+  then
+  $d.setRuleMatched(true);
+  $d.addErrorMessage("Item has been claimed as returned. So item is temporarily unavailable for circulation.");
+  $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+
+   end
+
+
+ rule "3DLoanHoldRequestLIB1"
+  agenda-group "place-request"
+  when
+  $n: NoticeInfo()
+  $d : DroolsResponse()
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+  $dr: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),!isClaimsReturnedFlag(),
+  getRequestTypeCode() in ("Hold/Hold Request","Recall/Hold Request"))
+
+  then
+  $d.setRuleMatched(true);
+  $d.getDroolsExchange().addToContext("requestExpirationDays",90);
+$d.getDroolsExchange().addToContext(OLEConstants.RECALL_NOTICE_CONTENT_CONFIG_NAME,"recall-notice");
+$d.getDroolsExchange().addToContext(OLEConstants.REQUEST_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"Request Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_NOTICE_CONTENT_CONFIG_NAME,"On Hold Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"On Hold Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT_CONFIG_NAME,"On Hold Courtesy Notice");
+   end
+
+ rule "3DLoanHoldRequestLIB2"
+  agenda-group "place-request"
+  when
+  $n: NoticeInfo()
+  $d : DroolsResponse()
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+  $dr: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),isClaimsReturnedFlag(),
+  getRequestTypeCode() in ("Hold/Hold Request"))
+
+  then
+  $d.setRuleMatched(true);
+  $d.addErrorMessage("Item has been claimed as returned. So item is temporarily unavailable for circulation.");
+  $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
+
+   end
+
+ rule "3DLoanRecallRequestLIB2"
+  agenda-group "place-request"
+  when
+  $n: NoticeInfo()
+  $d : DroolsResponse()
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("LIB"))
+  $dr: OleDeliverRequestBo(getItemType() in ("THREE_DAYS"),!isClaimsReturnedFlag(),
+  getRequestTypeCode() in ("Recall/Hold Request"))
+
+  then
+  $d.setRuleMatched(true);
+  $d.getDroolsExchange().addToContext("requestExpirationDays",90);
+$d.getDroolsExchange().addToContext("minimumLoanPeriod","0-D");
+$d.getDroolsExchange().addToContext("recallLoanPeriod","14-D");
+$d.getDroolsExchange().addToContext(OLEConstants.RECALL_NOTICE_CONTENT_CONFIG_NAME,"recall-notice");
+$d.getDroolsExchange().addToContext(OLEConstants.REQUEST_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"Request Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_NOTICE_CONTENT_CONFIG_NAME,"On Hold Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_EXPIRATION_NOTICE_CONTENT_CONFIG_NAME,"On Hold Expiration Notice");
+$d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT_CONFIG_NAME,"On Hold Courtesy Notice");
+   end
+
 
 
 

@@ -20,7 +20,7 @@ $i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK"))
 
 then
 $l.setCirculationPolicyId("1WLExtCheckOutNew1");
-$l.loanPeriod("14-D","7-D");
+$l.loanPeriod("30-D","30-D");
  end
 
 rule "1WLExtCheckOutNew2"
@@ -36,7 +36,7 @@ then
 $l.setCirculationPolicyId("1WLExtCheckOutNew2");
 $d.addErrorMessage("Patron has more than 25 items checked out");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
-$l.loanPeriod("14-D","7-D");
+$l.loanPeriod("30-D","30-D");
  end
 
 rule "1WLExtCheckOutNew3"
@@ -50,7 +50,7 @@ $i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK"))
 
 then
 $l.setCirculationPolicyId("1WLExtCheckOutNew3");
-$l.loanPeriod("14-D","7-D");
+$l.loanPeriod("30-D","30-D");
  end
 
 rule "1WLExtCheckOutNew4"
@@ -66,6 +66,6 @@ then
 $l.setCirculationPolicyId("1WLExtCheckOutNew4");
 $d.addErrorMessage("Patron has more than 55 items checked out");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
-$l.loanPeriod("14-D","7-D");
+$l.loanPeriod("30-D","30-D");
  end
 

@@ -20,7 +20,7 @@ $i: OleItemRecordForCirc (getItemType() in ("LONG"))
 
 then
 $l.setCirculationPolicyId("2WLCheckOutNew1");
-$l.loanPeriod("14-D","7-D");
+$l.loanPeriod("30-D","7-D");
  end
 
 rule "2WLCheckOutNew2"
@@ -36,6 +36,6 @@ then
 $l.setCirculationPolicyId("2WLCheckOutNew2");
 $d.addErrorMessage("Patron has more than 20 items checked out");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
-$l.loanPeriod("14-D","7-D");
+$l.loanPeriod("30-D","7-D");
  end
 

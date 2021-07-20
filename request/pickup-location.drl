@@ -10,7 +10,7 @@ activation-group "pickup-location"
 when
 
  
- $pr : OLEPlaceRequestForm(getItemType() in ("LONG","ONE_WEEK") , getItemLocation() in ("MAIN","EGHAM","RAINHAM"))
+ $pr : OLEPlaceRequestForm(getItemType() in ("LONG","ONE_WEEK","THREE_DAYS","REF") , getItemLocation() in ("MAIN","EGHAM","RAINHAM","Level E"))
  $d : DroolsResponse()
 
 then

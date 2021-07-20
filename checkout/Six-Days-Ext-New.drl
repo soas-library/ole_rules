@@ -20,7 +20,7 @@ $p: OlePatronDocument(getBorrowerTypeCode() in ("STUX"),
 
 then
 $l.setCirculationPolicyId("CDE3CheckOutValidation1");
-$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("30-D",null); // This method takes due date and recall period as arguments.
  end
 
 
@@ -38,7 +38,7 @@ then
 $l.setCirculationPolicyId("CDE3CheckOutValidation2");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $d.addErrorMessage("Patron has more than 4 CD/DVD");
-$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("30-D",null); // This method takes due date and recall period as arguments.
  end
 
 rule "CDE6CheckOutValidation3"
@@ -54,7 +54,7 @@ then
 $l.setCirculationPolicyId("CDE3CheckOutValidation3");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $d.addErrorMessage("Patron has more than 25 items");
-$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("30-D",null); // This method takes due date and recall period as arguments.
  end
 
 rule "CDE6CheckOutValidation4"
@@ -69,7 +69,7 @@ $p: OlePatronDocument(getBorrowerTypeCode() in ("FULLX"),
 
 then
 $l.setCirculationPolicyId("CDE3CheckOutValidation4");
-$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("30-D",null); // This method takes due date and recall period as arguments.
  end
 
 
@@ -87,7 +87,7 @@ then
 $l.setCirculationPolicyId("CDE3CheckOutValidation5");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $d.addErrorMessage("Patron has more than 4 CD/DVD");
-$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("30-D",null); // This method takes due date and recall period as arguments.
  end
 
 rule "CDE6CheckOutValidation6"
@@ -103,6 +103,6 @@ then
 $l.setCirculationPolicyId("CDE3CheckOutValidation6");
 $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
 $d.addErrorMessage("Patron has more than 55 items");
-$l.loanPeriod("6-D",null); // This method takes due date and recall period as arguments.
+$l.loanPeriod("30-D",null); // This method takes due date and recall period as arguments.
  end
 

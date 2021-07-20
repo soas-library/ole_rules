@@ -18,9 +18,9 @@ when
 
 $b: ItemFineRate()
 $p: OlePatronDocument(getBorrowerTypeCode() not in ("REPAIRS"))
-$i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK","CARREL","THREE_DAYS","HEAD","MICRO"))
+$i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK","THREE_DAYS","HEAD","MICRO"))
 then
-$b.setFineRate(0.75);
+$b.setFineRate(0.00);
 $b.setInterval("D");
 end
 
@@ -33,7 +33,7 @@ $b: ItemFineRate()
 $p: OlePatronDocument(getBorrowerTypeCode() not in ("LIB"))
 $i: OleItemRecordForCirc (getItemType() in ("LONG"))
 then
-$b.setFineRate(0.25);
+$b.setFineRate(0.00);
 $b.setInterval("D");
 end
 

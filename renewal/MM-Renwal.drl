@@ -12,7 +12,7 @@ agenda-group "renewal validation"
 activation-group "renewal validation"
 when
 
-$l: OleLoanDocument(Integer.valueOf(getNumberOfRenewals()) < 10)
+$l: OleLoanDocument(Integer.valueOf(getNumberOfRenewals()) < 3000)
 $d : DroolsResponse()
 $n: NoticeInfo()
 $p: OlePatronDocument()
@@ -30,7 +30,7 @@ agenda-group "renewal validation"
 activation-group "renewal validation"
 when
 
-$l: OleLoanDocument(Integer.valueOf(getNumberOfRenewals()) >= 10)
+$l: OleLoanDocument(Integer.valueOf(getNumberOfRenewals()) >= 3000)
 $n: NoticeInfo()
 $d : DroolsResponse()
 $p: OlePatronDocument()

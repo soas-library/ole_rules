@@ -62,10 +62,10 @@ rule "Activation Date for Patron"
 rule "Check All Charges"
   agenda-group "general-checks"
   when
-  $p: OlePatronDocument(getBorrowerTypeCode() not in ("LIB"),getAllCharges("OVR_DUE","REPL_FEE","SER_FEE") > 10 )
+  $p: OlePatronDocument(getBorrowerTypeCode() not in ("LIB"),getAllCharges("OVR_DUE","REPL_FEE","SER_FEE") > 3000 )
   $d : DroolsResponse()
   then
-  $d.addErrorMessage("Patron's overall charges exceed 10 GBP");
+  $d.addErrorMessage("Patron's overall charges exceed 3000 GBP");
   $d.addOverridePermissions(DroolsConstants.MAX_CHARGES_PERMISSION);
   end
 
