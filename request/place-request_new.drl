@@ -17,7 +17,7 @@ $n: NoticeInfo()
 $d : DroolsResponse()
 $dr: OleDeliverRequestBo(getItemType() in ("LONG"),!isClaimsReturnedFlag(),
 getRequestTypeCode() in ("Recall/Hold Request"))
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","RESAST","SPORS"),getRequestedItemRecordsCount()<3,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),getRequestedItemRecordsCount()<3,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
 
 then
 $d.setRuleMatched(true);
@@ -37,7 +37,7 @@ agenda-group "place-request"
 when
 $n: NoticeInfo()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","EXT","ALUMNI","RESAST","SPORS"),getRequestedItemRecordsCount()<3)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),getRequestedItemRecordsCount()<3)
 $i: OleDeliverRequestBo(getItemType() in ("LONG"),isClaimsReturnedFlag(),
 getRequestTypeCode() in ("Recall/Hold Request"))
 
@@ -54,7 +54,7 @@ agenda-group "place-request"
 when
 $n: NoticeInfo()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","EXT","ALUMNI","RESAST","SPORS"),getRequestedItemRecordsCount()>=3)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),getRequestedItemRecordsCount()>=3)
 $i: OleDeliverRequestBo(getItemType() in ("LONG"),
 getRequestTypeCode() in ("Recall/Hold Request"))
 
@@ -72,7 +72,7 @@ $n: NoticeInfo()
 $d : DroolsResponse()
 $dr: OleDeliverRequestBo(getItemType() in ("LONG"),
 getRequestTypeCode() in ("Recall/Hold Request"))
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","EXT","ALUMNI","RESAST","SPORS"), $dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"), $dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
 
 then
 $d.setRuleMatched(true);
@@ -87,7 +87,7 @@ when
 $n: NoticeInfo()
 $d : DroolsResponse()
 $dr: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),!isClaimsReturnedFlag(),getRequestTypeCode() in ("Recall/Hold Request"))
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX","STU","FULLX","FULL","RESAST","SPORS"),getRequestedItemRecordsCount() < 3,
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),getRequestedItemRecordsCount() < 3,
 $dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
 
 
@@ -109,7 +109,7 @@ agenda-group "place-request"
 when
 $n: NoticeInfo()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STUX","STU","FULLX","FULL","RESAST","SPORS"),getRequestedItemRecordsCount() < 3)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),getRequestedItemRecordsCount() < 3)
 $i: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),isClaimsReturnedFlag(),
 getRequestTypeCode() in ("Recall/Hold Request"))
 
@@ -125,7 +125,7 @@ $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
  when
  $n: NoticeInfo()
  $d : DroolsResponse()
- $p: OlePatronDocument(getBorrowerTypeCode() in ("STUX","STU","FULLX","FULL","RESAST","SPORS"),getRequestedItemRecordsCount() >= 3)
+ $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),getRequestedItemRecordsCount() >= 3)
  $i: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),
  getRequestTypeCode() in ("Recall/Hold Request"))
 
@@ -143,7 +143,7 @@ $d.addOverridePermissions(DroolsConstants.GENERAL_BLOCK_PERMISSION);
  $d : DroolsResponse()
  $i: OleDeliverRequestBo(getItemType() in ("ONE_WEEK"),
  getRequestTypeCode() in ("Recall/Hold Request"))
- $p: OlePatronDocument(getBorrowerTypeCode() in ("STUX","STU","FULLX","FULL","RESAST","SPORS"),$i!=null,getLoanedPatronBorrowerType($i.getItemId()) in ("ILL"))
+ $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),$i!=null,getLoanedPatronBorrowerType($i.getItemId()) in ("ILL"))
  
  then
  $d.setRuleMatched(true);
@@ -158,7 +158,7 @@ rule "2W_1M_6W_3MLoanHoldRequest"
   $d : DroolsResponse()
   $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),!isClaimsReturnedFlag(),
   getRequestTypeCode() in ("Hold/Hold Request"))
-  $p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getRequestedItemRecordsCount()<3,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),getRequestedItemRecordsCount()<3,$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) not in ("ILL"))
 
   then
   $d.setRuleMatched(true);
@@ -177,7 +177,7 @@ $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT
   $d : DroolsResponse()
   $i: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),isClaimsReturnedFlag(),
   getRequestTypeCode() in ("Hold/Hold Request"))
-  $p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getRequestedItemRecordsCount()<3)
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),getRequestedItemRecordsCount()<3)
 
 
   then
@@ -193,7 +193,7 @@ $d.getDroolsExchange().addToContext(OLEConstants.ON_HOLD_COURTESY_NOTICE_CONTENT
   when
   $n: NoticeInfo()
   $d : DroolsResponse()
-  $p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),getRequestedItemRecordsCount()>=3)
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),getRequestedItemRecordsCount()>=3)
   $i: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),
   getRequestTypeCode() in ("Hold/Hold Request"))
 
@@ -210,7 +210,7 @@ rule "2W_1M_6W_3MLoanHoldRequest5"
   $d : DroolsResponse()
   $dr: OleDeliverRequestBo(getItemType() in ("LONG","ONE_WEEK"),
   getRequestTypeCode() in ("Hold/Hold Request"))
-  $p: OlePatronDocument(getBorrowerTypeCode() in ("FULL"),$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
+  $p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX","FULLX","FULL","ALUMNI","EXT","SCHLR"),$dr!=null,getLoanedPatronBorrowerType($dr.getItemId()) in ("ILL"))
 
   then
   $d.setRuleMatched(true);
