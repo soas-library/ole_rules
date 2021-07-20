@@ -4,7 +4,7 @@ A list of changes made to library systems for Covid-19 mitigation in June 2020 a
 
 # changes
 
-##OLE Drools rules changes:
+## OLE Drools rules changes:
 
 - OLE: Allow hold requests of REF and THREE_DAY (previously LONG and ONE_WEEK only) 
 - OLE: Change due date period following a recall request to 14 days for all item types (previously 7 days)
@@ -15,7 +15,7 @@ A list of changes made to library systems for Covid-19 mitigation in June 2020 a
 - OLE: Updated the circulation rules for renewals of all item types and all borrower types to up the max. number of renewals from 10 to 3000
 - OLE: Updated the general check all transactions to up the fine limit from £10 to £3000
 
-##VuFind config changes:
+## VuFind config changes:
 
 - VuFind: Add hold / recall link to 'all' items
 
