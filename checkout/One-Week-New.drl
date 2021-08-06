@@ -14,7 +14,7 @@ activation-group "checkout validation"
 when
 $l: OleLoanDocument()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX"),getTotalLoanedItemsCount() < 20)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() < 20)
 $i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK"))
 
 then
@@ -28,7 +28,7 @@ activation-group "checkout validation"
 when
 $l: OleLoanDocument()
 $d : DroolsResponse()
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX"),getTotalLoanedItemsCount() >= 20)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() >= 20)
 $i: OleItemRecordForCirc (getItemType() in ("ONE_WEEK"))
 
 then
