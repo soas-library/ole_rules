@@ -14,7 +14,7 @@ when
 $l: OleLoanDocument()
 $d : DroolsResponse()
 $i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX"),
 (getLoanedItemsCountByItemType($i.getItemType()) < 4),getTotalLoanedItemsCount() < 20)
 
 then
@@ -30,7 +30,7 @@ when
 $l: OleLoanDocument()
 $d : DroolsResponse()
 $i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX"),
 (getLoanedItemsCountByItemType($i.getItemType()) >= 4),getTotalLoanedItemsCount() < 20)
 
 then
@@ -47,7 +47,7 @@ when
 $l: OleLoanDocument()
 $d : DroolsResponse()
 $i: OleItemRecordForCirc(getItemType() in ("THREE_DAYS"))
-$p: OlePatronDocument(getBorrowerTypeCode() in ("STU"),getTotalLoanedItemsCount() >= 20)
+$p: OlePatronDocument(getBorrowerTypeCode() in ("STU","STUX"),getTotalLoanedItemsCount() >= 20)
 
 then
 $l.setCirculationPolicyId("CD3CheckOutValidationNew8");
